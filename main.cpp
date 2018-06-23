@@ -6,7 +6,7 @@ using namespace my;
 using namespace std;
 
 int main() {
-    circular_buffer<int> d;
+    /*circular_buffer<int> d;
 
     for (int i = 0; i < 10; ++i) {
         d.push_back(i);
@@ -117,6 +117,9 @@ int main() {
     test.push_back(3);
 
     cerr << *(test.end() - 1);
+*/
+
+
 
     return 0;
 }
