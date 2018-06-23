@@ -55,7 +55,7 @@ int main() {
     cerr << endl;
 
     cerr << *(d3.rbegin()) << endl;
-    circular_buffer<int>::iterator re = d3.end();
+    circular_buffer<int>::const_iterator re = d3.end();
 
     --re;
     cerr << *re << endl;
@@ -65,6 +65,31 @@ int main() {
 
     cerr << (re == re2);
 
+    circular_buffer<int> a;
+
+    for (int i = 0; i < 10; ++i) {
+        a.push_back(i);
+    }
+
+    for (int i = 11; i < 100; ++i) {
+        a.insert(a.begin(), i);
+        a.erase(a.end() - 2);
+    }
+
+    cerr << endl;
+    for (auto i = a.begin(); i != a.end(); ++i) {
+        cerr << *i << " ";
+    }
+
+    circular_buffer<int> c;
+    c.push_back(6);
+    c.push_back(7);
+
+    circular_buffer<int>::iterator ncon = c.begin();
+    circular_buffer<int>::const_iterator con = c.begin();
+
+    cerr << endl << (con == ncon )<< endl;
+    cerr << endl << (ncon == con)<< endl;
 
     return 0;
 }
