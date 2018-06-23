@@ -191,8 +191,8 @@ namespace my {
         }
 
         circular_buffer(circular_buffer const &other, size_t new_capacity) {
-            data = (T *) operator new(new_capacity * sizeof(T));
             assert(new_capacity > other.capacity);
+            data = (T *) operator new(new_capacity * sizeof(T));
             capacity = new_capacity;
             size_ = other.size_;
             start = 0;
