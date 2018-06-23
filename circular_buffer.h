@@ -207,6 +207,7 @@ namespace my {
                     (data + j) -> ~T();
                 }
                 operator delete(data);
+                throw;
             }
         }
 
@@ -277,6 +278,7 @@ namespace my {
                     (data + j) -> ~T();
                 }
                 operator delete(data);
+                throw;
             }
         }
 
