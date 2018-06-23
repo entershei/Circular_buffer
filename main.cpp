@@ -106,5 +106,7 @@ int main() {
     test.push_back(2);
     test.push_back(3);
 
+    cerr << *(test.end() - 1);
+
     return 0;
 }

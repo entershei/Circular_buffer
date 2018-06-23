@@ -218,6 +218,10 @@ namespace my {
         typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
 
         iterator begin() {
+            if (capacity == 0) {
+                return iterator(nullptr, nullptr, nullptr);
+            }
+
             return iterator(data + start, data, data + capacity);
         }
 
@@ -226,6 +230,9 @@ namespace my {
         }
 
         iterator end() {
+            if (capacity == 0) {
+                return iterator(nullptr, nullptr, nullptr);
+            }
             return iterator(data + (start + size_) % capacity, data, data + capacity);
         }
 
@@ -234,6 +241,9 @@ namespace my {
         }
 
         const_iterator begin() const {
+            if (capacity == 0) {
+                return iterator(nullptr, nullptr, nullptr);
+            }
             return const_iterator(data + start, data, data + capacity);
         }
 
@@ -242,6 +252,9 @@ namespace my {
         }
 
         const_iterator end() const {
+            if (capacity == 0) {
+                return iterator(nullptr, nullptr, nullptr);
+            }
             return const_iterator(data + (start + size_) % capacity, data, data + capacity);
         }
 
