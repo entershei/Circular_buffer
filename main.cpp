@@ -2,7 +2,7 @@
 #include "circular_buffer.h"
 #include <gtest/gtest.h>
 
-using namespace my_Circular_buffer;
+using namespace my;
 using namespace std;
 
 int main() {
@@ -25,8 +25,6 @@ int main() {
         cerr << *it << endl;
     }
     cerr << endl;
-
-    d.erase(d.begin() + 1, d.end() - 2);
 
     for (auto it = d.begin(); it != d.end(); ++it) {
         cerr << *it << endl;

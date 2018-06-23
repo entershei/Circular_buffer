@@ -8,7 +8,7 @@
 #include <assert.h>
 #include <cstddef>
 
-namespace my_Circular_buffer {
+namespace my {
     template<typename T>
     struct circular_buffer;
 
@@ -27,15 +27,14 @@ namespace my_Circular_buffer {
         struct iterator_buf : std::iterator<std::random_access_iterator_tag, V> {
             friend circular_buffer;
 
-            iterator_buf(T *ptr, T *extreme_left, T *extreme_right) :
-                    ptr(ptr),
-                    extreme_left(extreme_left),
-                    extreme_right(extreme_right) {}
-
         private:
             T *ptr;
             T *extreme_left, *extreme_right;
 
+            iterator_buf(T *ptr, T *extreme_left, T *extreme_right) :
+                    ptr(ptr),
+                    extreme_left(extreme_left),
+                    extreme_right(extreme_right) {}
 
         public:
             explicit iterator_buf() {}
@@ -341,17 +340,6 @@ namespace my_Circular_buffer {
             }
             return ret;
         }
-
-        void erase(iterator it1, iterator it2) {
-            size_t num = it2 - it1;
-            for (auto i1 = it1, i2 = it2; i2 != end(); ++i1, ++i2) {
-                std::swap(*i1, *i2);
-            }
-            for (size_t i = 0; i < num; ++i) {
-                pop_back();
-            }
-        }
-
 
         friend void swap<T>(circular_buffer &, circular_buffer &) noexcept;
     };
