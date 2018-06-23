@@ -75,15 +75,19 @@ int main() {
 
     circular_buffer<int> a;
 
-    for (int i = 0; i < 10; ++i) {
+    cerr << "\n&&&&&&&&&&&\n";
+
+    for (int i = 0; i < 5; ++i) {
         a.push_back(i);
     }
 
-    for (int i = 11; i < 100; ++i) {
-        a.insert(a.begin(), i);
-        a.erase(a.end() - 2);
+    for (int i = 5; i < 100; ++i) {
+        a.push_back(i);
+        auto r = a.begin();
+        a.erase(a.begin() + 1);
     }
 
+    //1 96 97 98 99
     cerr << endl;
     for (auto i = a.begin(); i != a.end(); ++i) {
         cerr << *i << " ";
@@ -102,6 +106,12 @@ int main() {
     cerr << endl << (ncon == con)<< endl;
 
     circular_buffer<int> test;
+
+    cerr << "^^^^^^^^^^\n";
+
+    cerr << (test.begin() == test.end()) << endl;
+    cerr << (test.rbegin() == test.rend()) << endl;
+
     test.push_back(1);
     test.push_back(2);
     test.push_back(3);

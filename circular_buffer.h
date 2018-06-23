@@ -403,7 +403,7 @@ namespace my {
             if (it - begin() < (int) size_ / 2) {
                 ret = it + 1;
                 while (it != begin()) {
-                    iterator next = --it;
+                    iterator next = it - 1;
                     std::swap(*it, *next);
                     it = next;
                 }
