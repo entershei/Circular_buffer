@@ -334,6 +334,7 @@ namespace my {
                     start = 0;
                 } catch (...) {
                     operator delete(data);
+                    throw;
                 }
             } else {
                 if (size_ + 1 >= capacity) {
@@ -374,6 +375,7 @@ namespace my {
 
                 } catch (...) {
                     operator delete(data);
+                    throw;
                 }
             } else {
                 if (size_ + 1 >= capacity) {
