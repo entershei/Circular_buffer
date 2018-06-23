@@ -221,22 +221,22 @@ namespace my {
             return *this;
         }
 
-        bool empty() const {
+        bool empty() const noexcept {
             return size_ == 0;
         }
 
-        void clear() {
+        void clear() noexcept {
             for (auto it = begin(); it != end(); ++it) {
                 pop_front();
             }
         }
 
-        T& back() {
+        T& back() noexcept {
             assert(size_ && "can't back, size == 0");
             return data[(start + size_ - 1) % capacity];
         }
 
-        T const& back() const {
+        T const& back() const noexcept {
             assert(size_ && "can't back, size == 0");
             return data[(start + size_ - 1) % capacity];
         }
@@ -255,17 +255,17 @@ namespace my {
             ++size_;
         }
 
-        T& front() {
+        T& front() noexcept {
             assert(size_ && "can't front, size == 0");
             return data[start];
         }
 
-        T const& front() const {
+        T const& front() const noexcept {
             assert(size_ && "can't front, size == 0");
             return data[start];
         }
 
-        void pop_front() {
+        void pop_front() noexcept {
             assert(size_ && "can't pop_front(), size == 0");
             (data + start) -> ~T();
             start = (start + 1) % capacity;
