@@ -147,9 +147,7 @@ namespace my {
         }
 
         circular_buffer(circular_buffer const &other, size_t new_capacity) {
-            void* p = operator new(new_capacity * sizeof(T));
-
-            data = (T*) p;
+            data = (T*) operator new(new_capacity * sizeof(T));
             assert(new_capacity > other.capacity);
             capacity = new_capacity;
             size_ = other.size_;
@@ -164,7 +162,7 @@ namespace my {
                 for (size_t j = 0; j < i; ++j) {
                     (data + j) -> ~T();
                 }
-                operator delete(p);
+                operator delete(data);
             }
         }
 
@@ -194,9 +192,7 @@ namespace my {
         circular_buffer() : capacity(2), size_(0), start(0), data((T*) operator new(capacity * sizeof(T))) {}
 
         circular_buffer(circular_buffer const& other) : capacity(other.capacity), size_(other.size_), start(0) {
-            void* p = operator new(other.capacity * sizeof(T));
-
-            data = (T*) p;
+            data = (T*) operator new(other.capacity * sizeof(T));
             size_t i = 0;
             try {
                 for (auto it = other.begin(); it != other.end(); ++it) {
@@ -207,7 +203,7 @@ namespace my {
                 for (size_t j = 0; j < i; ++j) {
                     (data + j) -> ~T();
                 }
-                operator delete(p);
+                operator delete(data);
             }
         }
 
