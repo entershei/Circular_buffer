@@ -57,8 +57,6 @@ namespace my {
                       extreme_right(other.extreme_right) {}
 
 
-
-
             reference operator*() {
                 return *ptr;
             }
@@ -152,7 +150,11 @@ namespace my {
                 return ptr == it2.ptr;
             }*/
 
-            bool operator!=(iterator_buf const &it2) const {
+            bool operator!=(iterator_buf<true> const &it2) const {
+                return ptr != it2.ptr;
+            }
+
+            bool operator!=(iterator_buf<false> const &it2) const {
                 return ptr != it2.ptr;
             }
 
@@ -247,7 +249,7 @@ namespace my {
             return const_reverse_iterator(begin());
         }
 
-        circular_buffer() : capacity(2), size_(0), start(0), data((T*) operator new(capacity * sizeof(T))) {}
+        circular_buffer() noexcept : capacity(0), size_(0), start(0), data(nullptr) {}
 
         circular_buffer(circular_buffer const& other) : capacity(other.capacity), size_(other.size_), start(0) {
             data = (T*) operator new(other.capacity * sizeof(T));
@@ -306,11 +308,26 @@ namespace my {
         }
 
         void push_back(T const& val) {
-            if (size_ + 1 >= capacity) {
-                resize_x2();
+            if (capacity == 0) {
+                capacity = 2;
+                size_ = 1;
+                start = 0;
+
+                data = (T*) operator new(capacity * sizeof(T));
+
+                try {
+                    new(data) T(val);
+                } catch (...) {
+                    (data) -> ~T();
+                    operator delete(data);
+                }
+            } else {
+                if (size_ + 1 >= capacity) {
+                    resize_x2();
+                }
+                new(data + (start + size_) % capacity) T(val);
+                ++size_;
             }
-            new(data + (start + size_) % capacity) T(val);
-            ++size_;
         }
 
         T& front() noexcept {
@@ -331,12 +348,27 @@ namespace my {
         }
 
         void push_front(T const& val) {
-            if (size_ + 1 >= capacity) {
-                resize_x2();
+            if (capacity == 0) {
+                capacity = 2;
+                size_ = 1;
+                start = 0;
+
+                data = (T*) operator new(capacity * sizeof(T));
+
+                try {
+                    new(data) T(val);
+                } catch (...) {
+                    (data) -> ~T();
+                    operator delete(data);
+                }
+            } else {
+                if (size_ + 1 >= capacity) {
+                    resize_x2();
+                }
+                start = (start + capacity - 1) % capacity;
+                new(data + start) T(val);
+                ++size_;
             }
-            start = (start + capacity - 1) % capacity;
-            new(data + start) T(val);
-            ++size_;
         }
 
         size_t size() const {

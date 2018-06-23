@@ -11,11 +11,17 @@ int main() {
     for (int i = 0; i < 10; ++i) {
         d.push_back(i);
     }
-    const circular_buffer<int> d3(d);
+
+   const circular_buffer<int> d3(d);
 
     d.erase(d.erase(d.begin()));
 
     d[4] = 100;
+
+    cerr << *d.begin() << endl;
+    cerr << *(d.begin() + 1) << endl;
+    cerr << *(d.begin() + 2) << endl;
+    cerr << *(d.begin() + 3) << endl;
 
     auto it = d.end();
     it -= 2;
@@ -25,6 +31,8 @@ int main() {
         cerr << *it << endl;
     }
     cerr << endl;
+
+    cerr << "!!!!!\n";
 
     for (auto it = d.begin(); it != d.end(); ++it) {
         cerr << *it << endl;
@@ -88,8 +96,15 @@ int main() {
     circular_buffer<int>::iterator ncon = c.begin();
     circular_buffer<int>::const_iterator con = c.begin();
 
+    cerr << "!!!!!\n";
+
     cerr << endl << (con == ncon )<< endl;
     cerr << endl << (ncon == con)<< endl;
+
+    circular_buffer<int> test;
+    test.push_back(1);
+    test.push_back(2);
+    test.push_back(3);
 
     return 0;
 }
