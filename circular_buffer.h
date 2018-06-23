@@ -9,6 +9,7 @@
 #include <cstddef>
 #include <utility>
 #include <iterator>
+#include <type_traits>
 
 namespace my {
     template<typename T>
@@ -49,10 +50,13 @@ namespace my {
         public:
             explicit iterator_buf() {}
 
-            template<bool W>
-            iterator_buf(iterator_buf<W> const &other) : ptr(other.ptr),
-                                                         extreme_left(other.extreme_left),
-                                                         extreme_right(other.extreme_right) {}
+            template<bool is_const2, typename SFINAE = typename std::enable_if<is_const || !is_const2>::type>
+            iterator_buf(iterator_buf<is_const2> const &other)
+                    : ptr(other.ptr),
+                      extreme_left(other.extreme_left),
+                      extreme_right(other.extreme_right) {}
+
+
 
 
             reference operator*() {
@@ -71,14 +75,14 @@ namespace my {
                 return &operator*();
             }
 
-            template<bool W>
+            /*template<bool W>
             iterator_buf &operator=(iterator_buf<W> const &other) {
                 iterator_buf tmp(other);
                 std::swap(tmp.ptr, ptr);
                 std::swap(tmp.extreme_left, extreme_left);
                 std::swap(tmp.extreme_right, extreme_right);
                 return *this;
-            }
+            }*/
 
             iterator_buf &operator++() {
                 ++ptr;
@@ -136,11 +140,19 @@ namespace my {
                 return ret;
             }
 
-            bool operator==(iterator_buf const &it2) {
+            bool operator==(iterator_buf<true> const &it2) const {
                 return ptr == it2.ptr;
             }
 
-            bool operator!=(iterator_buf const &it2) {
+            bool operator==(iterator_buf<false> const &it2) const {
+                return ptr == it2.ptr;
+            }
+
+            /*bool operator==(iterator_buf const &it2) const {
+                return ptr == it2.ptr;
+            }*/
+
+            bool operator!=(iterator_buf const &it2) const {
                 return ptr != it2.ptr;
             }
 
