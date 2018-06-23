@@ -54,5 +54,17 @@ int main() {
 
     cerr << endl;
 
+    cerr << *(d3.rbegin()) << endl;
+    circular_buffer<int>::iterator re = d3.end();
+
+    --re;
+    cerr << *re << endl;
+
+    circular_buffer<int>::const_iterator re2 = d3.end();
+    --re2;
+
+    cerr << (re == re2);
+
+
     return 0;
 }
